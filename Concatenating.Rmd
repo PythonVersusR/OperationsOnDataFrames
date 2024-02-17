@@ -1,20 +1,22 @@
 <img src="https://i.imgur.com/6U6q5jQ.png"/>
 
-# Appending Data Frames in Python
+# Concatenating Data Frames in R
 
-Appending is an operation at the data frame level. It is an easy operation when all the data frames have the **same** column names.
+Concatenating is an operation at the data frame level. It is an easy operation when all the data frames have the **same** column names, and in the same position  (vertical concatenation).
 
 Let me bring some data frames:
 
 
 ```{r}
-list_of_files <- list.files(path = "FilesToAppend",
+rm(list = ls())
+list_of_files <- list.files(path = "FilesToConcatenate",
                             recursive = TRUE,
                             pattern = "\\P.csv$",
                             full.names = TRUE)
+list_of_files
 ```
 
-As you see, using a pattern in the names of the files is important:
+Now, I will create a list of data frames:
 
 
 ```{r}
@@ -55,18 +57,12 @@ allWars=do.call(rbind, dfs)
 dim(allWars)
 ```
 
-Just verifying:
-
-
-```{r}
-nrow(dfs[[1]]) + nrow(dfs[[2]]) + nrow(dfs[[3]]) + nrow(dfs[[4]])
-```
 
 
 ```{r}
 # this is it:
 
-allWars
+head(allWars,20)
 ```
 
 You can save this now. This still needs cleaning and formatting.
