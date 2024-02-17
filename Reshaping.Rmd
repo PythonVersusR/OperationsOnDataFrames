@@ -26,12 +26,13 @@ R did not send warnings, but has problems:
 table(dengue$departamento)
 ```
 
-
+Let's solve what we see:
 ```{r}
 dengue=dengue[dengue$departamento!='A',]
 
 dengue[dengue=='\\N']=NA
 
+# complete data
 dengue=dengue[complete.cases(dengue),]
 ```
 
@@ -90,11 +91,12 @@ CasesByWeek= aggregate(data=dengue,
                        sum)
 ```
 
-Now we can retry the reshaping with one index:
+Now we can retry the reshaping with one key index:
 
 ```{r}
 reshape2::dcast(CasesByWeek, departamento ~ enfermedad, value.var="case",sum)
 ```
+
 The reshaping with two keys:
 
 ```{r}
