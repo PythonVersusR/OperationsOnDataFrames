@@ -40,10 +40,11 @@ Now we have:
 
 str(dengue)
 ```
+
 The data is about people, but since there is no identifier for a person, it is possible that rows are repeated:
 
 ```{r}
-dengue[duplicated(dengue),]
+head(dengue[duplicated(dengue),],20)
 ```
 
 To ease the count, we could add a column of ones:
@@ -58,7 +59,7 @@ At this stage, we should aggregate the data:
 CasesByWeek= aggregate(data=dengue,
                        case~ departamento + provincia+ distrito + ano + semana + sexo + enfermedad,
                        sum)
-CasesByWeek
+head(CasesByWeek,40)
 ```
 
 
@@ -73,11 +74,13 @@ The object *CasesByWeek* shows the values in one column, and the other column se
 reshape2::dcast(CasesByWeek, departamento ~ enfermedad, value.var="case",sum)
 ```
 
-So we have something wrong we did not a previous warning.
+So we have something wrong we did not know:
+
 ```{r}
 
 dengue[grepl('II', dengue$enfermedad),]
 ```
+
 We will get rid of those rows, and rebuild _CasesByWeek_:
 
 ```{r}
@@ -99,11 +102,16 @@ The reshaping with two keys:
 reshape2::dcast(CasesByWeek, departamento + provincia ~ enfermedad, value.var="case",sum)
 ```
 
+The reshaping with two keys and two multi columns:
 
 ```{r}
 reshape2::dcast(CasesByWeek, departamento + provincia ~ enfermedad + sexo, value.var="case",sum)
 
 ```
+
+Have you noticed that the more keys the more missing values?
+
+Let's keep this last one:
 
 
 ```{r}
@@ -114,11 +122,13 @@ CasesByWeek_Wide=reshape2::dcast(CasesByWeek,
 CasesByWeek_Wide
 ```
 
+We could have simpler column names:
 
 ```{r}
 names(CasesByWeek_Wide)
 ```
 
+Re formatting:
 
 ```{r}
 library(magrittr)
@@ -129,6 +139,7 @@ names(CasesByWeek_Wide)%>%
 
 ```
 
+Renaming the columns:
 
 ```{r}
 names(CasesByWeek_Wide)=names(CasesByWeek_Wide)%>%
@@ -139,22 +150,15 @@ names(CasesByWeek_Wide)=names(CasesByWeek_Wide)%>%
 CasesByWeek_Wide
 ```
 
+### Wide to Long
+
 We should be able to transfor this wide version into a long one:
 
 
 ```{r}
+
 CasesByWeek_Long=reshape2::melt(CasesByWeek_Wide, id.vars=c("Departamento","Provincia"))
 CasesByWeek_Long
 ```
 
 
-
-```{r}
-object.size(CasesByWeek_Long)
-```
-
-
-```{r}
-
-object.size(CasesByWeek_Wide)
-```
