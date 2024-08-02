@@ -116,9 +116,7 @@ InFreeUnmatched=setdiff(allFree$Country,mili$Country)
 sort(InFreeUnmatched)
 ```
 
-Let's try to match strings that are NOT equally written. You need to previously install:
-* thefuzz (use _pip install thefuzz_)
-* python-Levenshtein  (use _pip python-Levenshtein_)
+Let's try to match strings that are NOT equally written. 
 
 ```{r}
 firstvector<-InFreeUnmatched
@@ -183,5 +181,10 @@ pd$to_pickle(freemili,filepath_or_buffer=file.path('FilesToMerge',"FreeAndMili_R
 
 ```{r}
 saveRDS(freemili,file=file.path('FilesToMerge','FreeAndMili.RDS'))
+```
+
+```{r}
+InFreeUnmatched[i],InMiliNotInFree
+
 ```
 

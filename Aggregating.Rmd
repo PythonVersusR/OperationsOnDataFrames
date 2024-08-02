@@ -85,6 +85,8 @@ dim(covid)
 # you have the data at the municipal level
 
 head(covid)
+
+write.csv(covid,"covid.csv",row.names = F)
 ```
 
 There are enough data, let's see different aggregation alternatives:

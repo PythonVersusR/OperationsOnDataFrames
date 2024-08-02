@@ -9,7 +9,7 @@ Let me get the data on dengue from [Peru](https://www.datosabiertos.gob.pe/datas
 ```{r}
 rm(list = ls())
 ##
-dengue = read.csv(file.path('FilesToReshape' , "datos_abiertos_vigilancia_dengue.csv"))
+dengue = read.csv(file.path('FilesToReshape' , "datos_abiertos_vigilancia_dengue_ok.csv"))
 head(dengue)
 ```
 
@@ -46,6 +46,16 @@ The data is about people, but since there is no identifier for a person, it is p
 
 ```{r}
 head(dengue[duplicated(dengue),],20)
+```
+
+
+```{r}
+write.csv(dengue,'dengue.csv',row.names = F)
+
+```
+```{r}
+str(dengue)
+
 ```
 
 To ease the count, we could add a column of ones:
